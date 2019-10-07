@@ -1,4 +1,3 @@
-
 import java.io.Serializable;
 
 public class Place implements Serializable {
@@ -7,8 +6,8 @@ public class Place implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// Attributes
-	private String postalCode,locality;
-	
+	private String postalCode, locality;
+
 	// Constructor
 	public Place(String postalCode, String locality) {
 		this.postalCode = postalCode;
@@ -30,6 +29,4 @@ public class Place implements Serializable {
 	public void setLocality(String locality) {
 		this.locality = locality;
 	}
-	
-	
 }
