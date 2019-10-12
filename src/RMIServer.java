@@ -6,7 +6,7 @@ public class RMIServer {
   public static void main(String[] args) {
     Registry r = null;
     try {
-      r = LocateRegistry.createRegistry(2022);
+      r = LocateRegistry.createRegistry(Integer.parseInt(args[0]));
     } catch (RemoteException a) {
       a.printStackTrace();
     }
