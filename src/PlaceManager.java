@@ -1,3 +1,6 @@
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -11,10 +14,17 @@ public class PlaceManager extends UnicastRemoteObject implements PlacesListInter
 
   // Attributes
   private static ArrayList<Place> places = new ArrayList<Place>();
+  private Integer port;
 
   // Constructor
   public PlaceManager() throws RemoteException {
     super(0);
+  }
+  
+  public PlaceManager(Integer port) throws RemoteException {
+    super(0);
+    this.port = port;
+    cloneFromReplica();
   }
 
   @Override
@@ -35,5 +45,24 @@ public class PlaceManager extends UnicastRemoteObject implements PlacesListInter
       }
     }
     return null;
+  }
+  
+  private void cloneFromReplica() {
+    ReplicasManagementInterface r = null;
+    String url = null;
+    PlacesListInterface p = null;
+    
+    try {
+      r = (ReplicasManagementInterface) Naming.lookup("rmi://localhost:2024/replicamanager");
+      url = r.addReplica("rmi://localhost:" + port.toString() + "/placelist");
+      System.out.println(url);
+      
+      if (url != null) {
+        p = (PlacesListInterface) Naming.lookup(url);
+        places = p.allPlaces();
+      }
+    } catch (MalformedURLException | RemoteException | NotBoundException e) {
+      e.printStackTrace();
+    }
   }
 }
