@@ -9,6 +9,13 @@ public class RMIServer {
       r = LocateRegistry.createRegistry(Integer.parseInt(args[0]));
     } catch (RemoteException a) {
       a.printStackTrace();
+      try {
+        r = LocateRegistry.getRegistry(Integer.parseInt(args[0]));
+      } catch (NumberFormatException e1) {
+        e1.printStackTrace();
+      } catch (RemoteException e1) {
+        e1.printStackTrace();
+      }
     }
 
     try {

@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class PlaceManager extends UnicastRemoteObject implements PlacesListInterface {
+public class PlaceManager extends UnicastRemoteObject implements PlacesListInterface, MonitoringInterface {
 
   /**
    * 
@@ -64,5 +64,10 @@ public class PlaceManager extends UnicastRemoteObject implements PlacesListInter
     } catch (MalformedURLException | RemoteException | NotBoundException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public void ping() throws RemoteException {
+    // Doesn't have implementation
   }
 }
